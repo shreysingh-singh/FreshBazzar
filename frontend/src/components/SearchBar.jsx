@@ -18,6 +18,7 @@ function SearchBar() {
           placeholder="Search"
           class="w-full h-full outline-none text-gray-500 bg-transparent placeholder-gray-500 text-sm"
         />
+        <button className="bg-green-800 mr-2 p-1 rounded-sm font-extralight text-sm cursor-pointer text-white hover:bg-green-950">Search</button>
       </div>
     </div>
   );
