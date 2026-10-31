@@ -10,11 +10,11 @@ function FreshPick() {
 
 
     useEffect(() => {
-        setLatestProducts(freshFruits.slice(0,6));
+        setLatestProducts(freshFruits.slice(0,5));
     },[])
     
   return (
-    <div className='p-8'>
+    <div className="p-8 bg-gray-100">
       <div>
         <Title
           text1={"Fresh Favourites,loved by you"}
@@ -23,7 +23,7 @@ function FreshPick() {
       </div>
 
       {/* Rendering Products  */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 gap-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-6 ">
         {latestProducts.map((items, idx) => (
           <ProductsItems
             key={idx}

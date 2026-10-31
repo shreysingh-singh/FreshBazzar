@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
+import { ShoppingBag } from "lucide-react";
 
 function ProductsItems({
   id,
@@ -14,15 +15,18 @@ function ProductsItems({
   const { currency } = useContext(ShopContext);
 
   return (
-    <div className="bg-gray-100 p-3 rounded-2xl cursor-pointer">
-        {/* to={`/product/${id}`} className="group block" */}
+    <div className="bg-white p-3 rounded-2xl cursor-pointer">
+      {/* to={`/product/${id}`} className="group block" */}
       {/* Product Image */}
+      {/* <span class="bg-lime-300 text-neutral-800 text-xs px-2 py-0.5 rounded-full pb-5 overflow-hidden">
+        <span class="font-bold">20%</span> off
+      </span> */}
       <div className="relative overflow-hidden rounded-xl bg-[#F7F8F4]">
         <img
           src={image}
           alt={name}
           loading="lazy"
-          className="w-full aspect-square object-contain transition-transform duration-500 group-hover:scale-110"
+          className="w-full aspect-square object-contain transition-transform duration-200 ease-in-out hover:scale-105"
         />
       </div>
 
@@ -46,18 +50,14 @@ function ProductsItems({
         </div>
 
         {/* Price */}
-        <div className="flex items-center gap-2 pt-1">
+        <div className="flex items-center justify-between gap-2 pt-1">
           <span className="text-sm font-bold text-[#263A29]">
             {currency}
             {price}
           </span>
-
-          {originalPrice && (
-            <span className="text-xs text-[#999999] line-through">
-              {currency}
-              {originalPrice}
-            </span>
-          )}
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-green-500 hover:bg-green-800 text-white">
+            <ShoppingBag size={16} strokeWidth={1.8} />
+          </div>
         </div>
       </div>
     </div>

@@ -3,9 +3,12 @@ import SearchBar from "./SearchBar";
 import logo from "../assets/logo.png";
 import Navbar from "./NavBar";
 import ImageGallery from "./ImageGalary";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 
 const Header = () => {
   const cartTotal = "19.46";
+  const { currency } = useContext(ShopContext);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
@@ -59,7 +62,7 @@ const Header = () => {
 
             <div className="hidden text-left sm:block">
               <p className="text-xs text-gray-500">Shopping cart</p>
-              <p className="text-sm font-bold text-gray-900">${cartTotal}</p>
+              <p className="text-sm font-bold text-gray-900">{currency}{cartTotal}</p>
             </div>
           </button>
         </div>
