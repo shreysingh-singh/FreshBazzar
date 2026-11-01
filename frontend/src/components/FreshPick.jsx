@@ -14,7 +14,7 @@ function FreshPick() {
     },[])
     
   return (
-    <div className="p-8 bg-gray-100">
+    <div className="p-8 ">
       <div>
         <Title
           text1={"Fresh Favourites,loved by you"}

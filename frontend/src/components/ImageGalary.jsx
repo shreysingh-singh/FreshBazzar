@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Bowl from "../assets/Bowl.png";
 import Juice from "../assets/Juices.png";
 import Vegetables from "../assets/Vegetables.png";
@@ -21,7 +21,6 @@ const images = [
 
 function ImageGallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef(null);
 
   const totalSlides = images.length;
 
@@ -36,56 +35,27 @@ function ImageGallery() {
   // Automatically move to the next slide
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      nextSlide();
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [totalSlides]);
-
-  // Move the slider whenever the current slide changes
-  useEffect(() => {
-    const slider = sliderRef.current;
-
-    if (!slider || !slider.children[0]) return;
-
-    const slideWidth = slider.children[0].clientWidth;
-
-    slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-  }, [currentSlide]);
-
-  // Recalculate slide position when the window resizes
-  useEffect(() => {
-    const handleResize = () => {
-      const slider = sliderRef.current;
-
-      if (!slider || !slider.children[0]) return;
-
-      const slideWidth = slider.children[0].clientWidth;
-
-      slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, [currentSlide]);
+  }, []);
 
   return (
-    <div className="relative px-7 mt-2 w-full overflow-hidden ">
+    <div className="relative mt-2 mx-7 overflow-hidden">
       {/* Image Slider */}
       <div
-        ref={sliderRef}
-        className="flex w-full transition-transform duration-700 ease-in-out will-change-transform"
+        className="flex transition-transform duration-700 ease-in-out will-change-transform"
         style={{
           transform: `translateX(-${currentSlide * 100}%)`,
         }}
       >
-        {images.map((image) => (
-          <div key={image.src} className="w-full shrink-0">
+        {images.map((image, index) => (
+          <div key={index} className="flex-[0_0_100%] min-w-0 overflow-hidden">
             <img
               src={image.src}
               alt={image.alt}
-              className="block h-[250px] w-full object-cover sm:h-[350px] lg:h-[450px]"
+              className="block w-full h-[250px] sm:h-[350px] lg:h-[450px] object-cover"
             />
           </div>
         ))}

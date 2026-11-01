@@ -1,11 +1,10 @@
-import { Headset, ShieldCheck, Sprout, Truck } from 'lucide-react';
-
+import { Headset, ShieldCheck, Sprout, Truck } from "lucide-react";
 
 function StoreBenefits() {
   return (
-    <div className="p-6 px-10 border border-gray-200 flex items-center justify-between mt-3">
-      <div className="flex items-center gap-3">
-        <div className="text-green-600 ">
+    <div className="p-4 sm:p-5 md:p-6 px-4 sm:px-6 md:px-10 border border-gray-200 flex flex-col sm:grid sm:grid-cols-2 lg:flex lg:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 lg:gap-4 mt-3">
+      <div className="flex items-center gap-3 w-full lg:w-auto">
+        <div className="text-green-600 shrink-0">
           <Truck />
         </div>
         <div>
@@ -15,8 +14,9 @@ function StoreBenefits() {
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="text-green-600 ">
+
+      <div className="flex items-center gap-3 w-full lg:w-auto">
+        <div className="text-green-600 shrink-0">
           <Sprout />
         </div>
         <div>
@@ -28,8 +28,9 @@ function StoreBenefits() {
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="text-green-600 ">
+
+      <div className="flex items-center gap-3 w-full lg:w-auto">
+        <div className="text-green-600 shrink-0">
           <ShieldCheck />
         </div>
         <div>
@@ -41,8 +42,9 @@ function StoreBenefits() {
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="text-green-600 ">
+
+      <div className="flex items-center gap-3 w-full lg:w-auto">
+        <div className="text-green-600 shrink-0">
           <Headset />
         </div>
         <div>
@@ -56,4 +58,4 @@ function StoreBenefits() {
   );
 }
 
-export default StoreBenefits
+export default StoreBenefits;

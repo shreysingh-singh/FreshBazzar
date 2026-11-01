@@ -4,7 +4,7 @@ function Banner() {
     console.log('banner is render');
     
   return (
-    <div className="w-2/2 p-13 flex items-center justify-between">
+    <div className="w-2/2 p-13 flex items-center justify-between bg-gray-100">
       {/* Banner-1  */}
       <div className="h-60 bg-green-100 border border-zinc-200 rounded-[18px] flex gap-5 group hover:border-zinc-300 transition duration-300 overflow-hidden hover:-translate-y-1 hover:shadow-sm">
         {/* Text Content */}
