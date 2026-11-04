@@ -1,20 +1,18 @@
-
-
 export const freshFruits = [
   {
     id: 1,
-    name: "Fresh Red Apples",
-    bestSeller: true,
+    name: "Fresh  Grapes",
+    bestSeller: false,
     category: "Fruit",
     date: 1716634345448,
     image:
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&h=500&fit=crop&bg=white",
-    price: 180,
-    unit: "1 kg",
-    description: "Crispy, juicy and naturally sweet red apples.",
-    stock: 50,
+      "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=500&h=500&fit=crop&bg=white",
+    price: 120,
+    unit: "500 g",
+    description: "Fresh, juicy and naturally sweet green grapes.",
+    stock: 45,
     isOrganic: true,
-    discount: 10,
+    discount: 0,
   },
   {
     id: 2,
@@ -482,8 +480,6 @@ export const freshFruits = [
     discount: 10,
   },
 ];
-
-
 
 export const freshVegetables = [
   {
@@ -1209,8 +1205,6 @@ export const freshVegetables = [
   },
 ];
 
-
-
 export const leafyGreens = [
   {
     id: 1,
@@ -1487,8 +1481,6 @@ export const leafyGreens = [
     discount: 10,
   },
 ];
-
-
 
 export const seasonalPicks = [
   {
@@ -1853,8 +1845,6 @@ export const seasonalPicks = [
     discount: 10,
   },
 ];
-
-
 
 export const organicGoodness = [
   {
@@ -2406,8 +2396,6 @@ export const organicGoodness = [
     discount: 5,
   },
 ];
-
-
 
 export const dailyEssentials = [
   {
@@ -3046,8 +3034,3 @@ export const dailyEssentials = [
     discount: 0,
   },
 ];
-
-
-
-
-

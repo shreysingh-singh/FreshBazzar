@@ -2,7 +2,6 @@ import { User, Heart, ShoppingBag, Menu, ChevronDown, Truck } from "lucide-react
 import SearchBar from "./SearchBar";
 import logo from "../assets/logo.png";
 import Navbar from "./NavBar";
-import ImageGallery from "./ImageGalary";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 
@@ -18,7 +17,7 @@ const Header = () => {
           <img
             src={logo}
             alt="FreshBazzar"
-            className="h-16 w-auto object-contain"
+            className="h-14 w-auto object-contain"
           />
         </a>
 

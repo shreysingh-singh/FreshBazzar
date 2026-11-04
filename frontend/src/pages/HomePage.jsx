@@ -7,16 +7,19 @@ import WeekendofferSection from '../components/WeekendofferSection';
 import StoryBanner from '../components/StoryBanner';
 import InspirationSection from '../components/InspirationSection';
 import CustomerReviews from '../components/Testimonial';
+import CategorySection from '../components/CategorySection';
+import BestSeller from '../components/BestSeller';
 
 function HomePage() {
   return (
     <div className="bg-gray-100">
       <ImageGallery />
       <StoreBenefits />
+      <CategorySection />
       <FreshPick />
       <Banner />
-      <FreshPick />
       <WeekendofferSection />
+      <BestSeller />
       <StoryBanner />
       <InspirationSection />
       <CustomerReviews />

@@ -7,6 +7,9 @@ function ProductsItems({
   name,
   image,
   price,
+  bestSeller,
+  isOrganic,
+  discount,
   originalPrice,
   unit,
   pieces,
@@ -16,28 +19,39 @@ function ProductsItems({
 
   return (
     <div className="bg-white p-3 rounded-2xl cursor-pointer">
-      {/* to={`/product/${id}`} className="group block" */}
       {/* Product Image */}
-      {/* <span class="bg-lime-300 text-neutral-800 text-xs px-2 py-0.5 rounded-full pb-5 overflow-hidden">
-        <span class="font-bold">20%</span> off
-      </span> */}
       <div className="relative overflow-hidden rounded-xl bg-[#F7F8F4]">
         <img
-          src={image}
+          src={Array.isArray(image) ? image[0] : image}
           alt={name}
           loading="lazy"
           className="w-full aspect-square object-contain transition-transform duration-200 ease-in-out hover:scale-105"
         />
+
+        {/* Product Badges */}
+        <div className="absolute top-3 left-3">
+          {bestSeller ? (
+            <span className="bg-green-100 text-green-600 text-[10px] sm:text-xs px-3 py-1 rounded-2xl">
+              Bestseller
+            </span>
+          ) : isOrganic ? (
+            <span className="bg-emerald-100 text-emerald-700 text-[10px] sm:text-xs px-3 py-1 rounded-full">
+              Organic
+            </span>
+          ) : discount > 0 ? (
+            <span className="bg-red-100 text-red-500 text-[10px] sm:text-xs px-3 py-1 rounded-full">
+              {discount}% OFF
+            </span>
+          ) : null}
+        </div>
       </div>
 
       {/* Product Details */}
       <div className="pt-3 space-y-1.5">
-        {/* Product Name */}
         <h3 className="text-sm font-semibold text-[#263A29] line-clamp-1">
           {name}
         </h3>
 
-        {/* Quantity */}
         <p className="text-xs text-[#777D72]">
           {unit}
           {pieces && ` · Approx. ${pieces} pieces`}
@@ -51,11 +65,21 @@ function ProductsItems({
 
         {/* Price */}
         <div className="flex items-center justify-between gap-2 pt-1">
-          <span className="text-sm font-bold text-[#263A29]">
-            {currency}
-            {price}
-          </span>
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-green-500 hover:bg-green-800 text-white">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-bold text-[#263A29]">
+              {currency}
+              {price}
+            </span>
+
+            {originalPrice > price && (
+              <span className="text-xs text-gray-400 line-through">
+                {currency}
+                {originalPrice}
+              </span>
+            )}
+          </div>
+
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-green-500 hover:bg-green-800 text-white transition-colors">
             <ShoppingBag size={16} strokeWidth={1.8} />
           </div>
         </div>

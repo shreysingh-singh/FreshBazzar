@@ -51,7 +51,7 @@ const CustomerReviews = () => {
   const marqueeReviews = [...reviews, ...reviews];
 
   return (
-    <section className="w-full py-14 md:py-20 overflow-hidden bg-[#f5f7f0]">
+    <section className="w-full py-14 md:py-20 overflow-hidden bg-gray-100 border-t-1 border-gray-200">
       {/* Heading */}
       <div className="text-center px-4 mb-8 md:mb-12">
         <p className="text-sm font-semibold uppercase tracking-[3px] text-green-700 mb-3">
