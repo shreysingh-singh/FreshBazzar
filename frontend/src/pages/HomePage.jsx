@@ -12,7 +12,7 @@ import BestSeller from '../components/BestSeller';
 
 function HomePage() {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-[#F1F8EC]">
       <ImageGallery />
       <StoreBenefits />
       <CategorySection />

@@ -18,7 +18,7 @@ function ProductsItems({
   const { currency } = useContext(ShopContext);
 
   return (
-    <div className="bg-white p-3 rounded-2xl cursor-pointer">
+    <div className="bg-[#F5F7F2] border border-gray-200 p-3 rounded-2xl cursor-pointer">
       {/* Product Image */}
       <div className="relative overflow-hidden rounded-xl bg-[#F7F8F4]">
         <img

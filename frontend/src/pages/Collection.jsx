@@ -129,7 +129,7 @@ function Collection() {
   );
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#292d28]">
+    <div className="min-h-screen bg-gray-100 font-sans text-[#292d28]">
       <div className="mx-auto max-w-[1440px] px-5 pb-10 pt-4 sm:px-8 lg:px-10">
         {/* Breadcrumb */}
         {/* <div className="mb-5 flex items-center gap-2 text-[10px] text-stone-400">
@@ -172,7 +172,7 @@ function Collection() {
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[170px_minmax(0,1fr)] xl:grid-cols-[205px_minmax(0,1fr)]">
           {/* Sidebar Filters */}
-          <aside className={`${showFilter ? "block" : "hidden"} lg:block`}>
+          <aside className={`${showFilter ? "block" : "hidden"} lg:block `}>
             {/* Filter Header */}
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
               <h2 className="text-sm font-semibold">Filters</h2>
