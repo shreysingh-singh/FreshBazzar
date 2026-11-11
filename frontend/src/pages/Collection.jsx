@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   SlidersHorizontal,
   RotateCcw,
@@ -14,6 +14,9 @@ import Breadcrumb from "../components/Breadcrumb";
 
 function Collection() {
   const {
+    search,
+    setSearch,
+    allProducts = [],
     freshFruits = [],
     freshVegetables = [],
     leafyGreens = [],
@@ -21,25 +24,6 @@ function Collection() {
     organicGoodness = [],
     dailyEssentials = [],
   } = useContext(ShopContext);
-
-  // 1. Combine all product arrays
-  const allProducts = useMemo(() => {
-    return [
-      ...freshFruits,
-      ...freshVegetables,
-      ...leafyGreens,
-      ...seasonalPicks,
-      ...organicGoodness,
-      ...dailyEssentials,
-    ];
-  }, [
-    freshFruits,
-    freshVegetables,
-    leafyGreens,
-    seasonalPicks,
-    organicGoodness,
-    dailyEssentials,
-  ]);
 
   // 2. Category data
   const categories = useMemo(
@@ -107,15 +91,27 @@ function Collection() {
   };
 
   // 7. Filter products
+
   const filteredProducts = useMemo(() => {
-    if (selectedCategories.length === 0) {
-      return allProducts;
+    // First apply category filtering
+    let products =
+      selectedCategories.length === 0
+        ? allProducts
+        : categories
+            .filter((category) => selectedCategories.includes(category.value))
+            .flatMap((category) => category.products);
+
+    // Then apply search filtering
+    const searchTerm = search.trim().toLowerCase();
+
+    if (searchTerm) {
+      products = products.filter((product) =>
+        product.name?.toLowerCase().includes(searchTerm),
+      );
     }
 
-    return categories
-      .filter((category) => selectedCategories.includes(category.value))
-      .flatMap((category) => category.products);
-  }, [allProducts, selectedCategories, categories]);
+    return products;
+  }, [allProducts, selectedCategories, categories, search]);
 
   // 8. Pagination calculations
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
@@ -127,6 +123,20 @@ function Collection() {
     indexOfFirstProduct,
     indexOfLastProduct,
   );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  // const applyFilter = () => {
+  //   let productCp = allProducts.slice();
+
+  //   if(search) {
+  //     productCp = productCp.filter(items => items.name.toLowerCase().includes(search.toLowerCase()))
+  //   }
+  // }
+  // useEffect(() => {
+  //   applyFilter();
+  // },[search]);
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans text-[#292d28]">

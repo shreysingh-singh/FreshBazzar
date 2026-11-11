@@ -1,6 +1,10 @@
-import React from "react";
+import { ShopContext } from "@/context/ShopContext";
+import React, { useContext } from "react";
 
 function SearchBar() {
+  const { search, setSearch} = useContext(ShopContext);
+  console.log(search);
+  
   return (
     <div>
       <div className="flex items-center border pl-4 gap-2 border-gray-500/30 h-[46px] rounded-full overflow-hidden max-w-md w-full">
@@ -14,11 +18,17 @@ function SearchBar() {
           <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8" />
         </svg>
         <input
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
-          placeholder="Search"
-          class="w-full h-full outline-none text-gray-500 bg-transparent placeholder-gray-500 text-sm"
+          placeholder="Search for furits, Vegetable and more.."
+          class="w-full h-full outline-none text-gray-500 bg-transparent placeholder-gray-400 text-xs"
         />
-        <button className="bg-green-800 mr-2 p-1 rounded-sm font-extralight text-sm cursor-pointer text-white hover:bg-green-950">Search</button>
+        <button
+          onClick={() => setSearch(search.trim())}
+          className="bg-green-700 mr-2 p-1 rounded-4xl px-3 py-1 font-extralight text-sm cursor-pointer text-white hover:bg-green-800"
+        >
+          Search
+        </button>
       </div>
     </div>
   );
