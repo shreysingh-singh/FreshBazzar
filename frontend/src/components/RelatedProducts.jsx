@@ -1,61 +1,54 @@
-import { ShopContext } from "@/context/ShopContext";
-import { useContext, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
+import { ShopContext } from "../context/ShopContext";
 import ProductsItems from "./ProductsItems";
+import Title from "./Title";
+import { Link } from "react-router-dom";
 
 function RelatedProducts({ category, productId }) {
-  const {
-    freshFruits = [],
-    freshVegetables = [],
-    leafyGreens = [],
-    seasonalPicks = [],
-    organicGoodness = [],
-    dailyEssentials = [],
-  } = useContext(ShopContext);
+  const { allProducts = [] } = useContext(ShopContext);
 
-  // Combine all products
-  const allProducts = useMemo(
-    () => [
-      ...freshFruits,
-      ...freshVegetables,
-      ...leafyGreens,
-      ...seasonalPicks,
-      ...organicGoodness,
-      ...dailyEssentials,
-    ],
-    [
-      freshFruits,
-      freshVegetables,
-      leafyGreens,
-      seasonalPicks,
-      organicGoodness,
-      dailyEssentials,
-    ],
-  );
-
-  // Find related products
-  const related = useMemo(() => {
+  const relatedProducts = useMemo(() => {
     return allProducts
-      .filter((item) => item.category === category && item.id !== productId)
+      .filter(
+        (item) =>
+          item.category === category &&
+          String(item.id) !== String(productId)
+      )
       .slice(0, 4);
   }, [allProducts, category, productId]);
 
   return (
-    <div className="w-full">
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">
-          Related Products
-        </h2>
-        <p className="text-sm text-gray-500 mt-1">
-          You might also like these products.
-        </p>
-      </div>
+    <section className="mt-12 px-4 sm:px-6 lg:px-9 mb-12">
+      <Title
+        text1="Related products"
+        text2="Discover more fresh products you might like."
+      />
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {related.map((item) => (
-          <ProductsItems key={item.id} {...item} />
-        ))}
-      </div>
-    </div>
+      {relatedProducts.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+            {relatedProducts.map((item) => (
+              <ProductsItems
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                image={item.image}
+                price={item.price}
+                originalPrice={item.originalPrice}
+                unit={item.unit}
+                pieces={item.pieces}
+                rating={item.rating}
+                bestSeller={item.bestSeller}
+                isOrganic={item.isOrganic}
+                discount={item.discount}
+              />
+            ))}
+          </div>
+      ) : (
+        <p className="text-sm text-gray-500 mt-5">
+          No related products available.
+        </p>
+      )}
+    </section>
   );
 }
 

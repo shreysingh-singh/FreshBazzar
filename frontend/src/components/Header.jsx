@@ -7,7 +7,7 @@ import { ShopContext } from "../context/ShopContext";
 
 const Header = () => {
   const cartTotal = "19.46";
-  const { currency } = useContext(ShopContext);
+  const { currency, getCartCount, navigate } = useContext(ShopContext);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
@@ -48,6 +48,7 @@ const Header = () => {
 
           {/* Shopping Cart */}
           <button
+            onClick={() => navigate('/cart')}
             type="button"
             aria-label="Shopping cart"
             className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-green-50"
@@ -55,13 +56,16 @@ const Header = () => {
             <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-green-100 text-green-700">
               <ShoppingBag size={22} strokeWidth={1.8} />
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-xs font-semibold text-white">
-                2
+                {getCartCount()}
               </span>
             </div>
 
             <div className="hidden text-left sm:block">
               <p className="text-xs text-gray-500">Shopping cart</p>
-              <p className="text-sm font-bold text-gray-900">{currency}{cartTotal}</p>
+              <p className="text-sm font-bold text-gray-900">
+                {currency}
+                {cartTotal}
+              </p>
             </div>
           </button>
         </div>
