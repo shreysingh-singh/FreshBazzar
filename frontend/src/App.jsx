@@ -20,12 +20,16 @@ import { Toaster } from "sonner";
 // Layout for normal website pages
 const MainLayout = () => {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <ScrollToTop />
       <Header />
-      <Outlet />
+
+      <main className="flex-1">
+        <Outlet />
+      </main>
+
       <Footer />
-    </>
+    </div>
   );
 };
 
@@ -45,11 +49,10 @@ function App() {
       <Toaster position="top-right" richColors closeButton duration={1000} />
 
       <Routes>
-        {/* Main Website Layout */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/collection" element={<Collection />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/our-story" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/product/:productId" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
@@ -58,7 +61,6 @@ function App() {
           <Route path="/test" element={<TestPage />} />
         </Route>
 
-        {/* Authentication Layout */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Auth />} />
           <Route path="/signup" element={<Auth />} />

@@ -127,16 +127,7 @@ function Collection() {
     setCurrentPage(1);
   }, [search]);
 
-  // const applyFilter = () => {
-  //   let productCp = allProducts.slice();
-
-  //   if(search) {
-  //     productCp = productCp.filter(items => items.name.toLowerCase().includes(search.toLowerCase()))
-  //   }
-  // }
-  // useEffect(() => {
-  //   applyFilter();
-  // },[search]);
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans text-[#292d28]">

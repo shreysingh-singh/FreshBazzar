@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "@/context/ShopContext";
 import {
   Check,
@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   DollarSign,
   CirclePoundSterling,
+  CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 import StoreBenefits from "@/components/StoreBenefits";
@@ -27,6 +28,7 @@ const PlaceOrder = () => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [emailOffers, setEmailOffers] = useState(true);
   const [orderNotes, setOrderNotes] = useState("");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -120,15 +122,44 @@ const PlaceOrder = () => {
           <span className="font-semibold text-[#399b25]">Checkout</span>
         </div>
 
-        {/* Page Heading */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            One step closer to fresh.
-          </h1>
+        <div className="flex justify-between">
+          {/* Page Heading */}
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+              One step closer to fresh.
+            </h1>
 
-          <p className="mt-2 text-sm text-gray-500">
-            Your basket is ready. Let's get it to your doorstep.
-          </p>
+            <p className="mt-2 text-sm text-gray-500">
+              Your basket is ready. Let's get it to your doorstep.
+            </p>
+          </div>
+          {/* Checkout Steps */}
+          <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium sm:gap-4">
+            <span className="flex items-center gap-1.5 text-[#92988e]">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#dfe4da] text-[9px]">
+                1
+              </span>
+              Cart
+            </span>
+
+            <span className="h-px w-5 bg-[#dfe4da]" />
+
+            <span className="flex items-center gap-1.5 text-[#92988e]">
+              <span className="flex items-center gap-1.5 text-[#299b20]">
+                <CheckCircle2 size={14} />
+              </span>
+              Checkout
+            </span>
+
+            <span className="h-px w-5 bg-[#dfe4da]" />
+
+            <span className="flex items-center gap-1.5 text-[#92988e]">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#dfe4da] text-[9px]">
+                3
+              </span>
+              Confirmation
+            </span>
+          </div>
         </div>
 
         {/* Checkout Form */}
@@ -590,6 +621,7 @@ const PlaceOrder = () => {
 
                 {/* Place Order */}
                 <button
+                  onClick={() => navigate("/orders")}
                   type="submit"
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#399b25] px-5 py-4 text-sm font-bold text-white shadow-md shadow-green-900/10 transition duration-300 hover:-translate-y-0.5 hover:bg-[#318820] hover:shadow-lg"
                 >

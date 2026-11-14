@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 
 function Footer() {
   return (
-    <footer className="bg-[#f5f7f0] w-full mx-auto text-[#465448] pt-8 lg:pt-12 px-4 sm:px-8 md:px-16 lg:px-28 overflow-hidden">
+    <footer className="bg-[#f5f7f0] w-full mx-auto text-[#465448] pt-8 lg:pt-12 px-4 sm:px-8 md:px-16 lg:px-28 overflow-hidden m-0 mt-0 mb-0 p-0">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12">
         <div className="lg:col-span-3 space-y-6">
           <a href="https://prebuiltui.com" className="block">
