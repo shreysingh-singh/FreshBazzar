@@ -21,8 +21,20 @@ const ShopContextProvider = (props) => {
 
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("cartItems");
+      return savedCart ? JSON.parse(savedCart) : {};
+    } catch (error) {
+      console.error("Error loading cart:", error);
+      return {};
+    }
+  });
 
+  // Save cart whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
   // Combine all product categories into one array
   const allProducts = useMemo(
     () => [
@@ -35,7 +47,7 @@ const ShopContextProvider = (props) => {
     ],
     [],
   );
-  
+
   const addToCart = (itemId, size, quantity = 1) => {
     setCartItems((prevCart) => {
       const cartData = structuredClone(prevCart);
@@ -64,30 +76,57 @@ const ShopContextProvider = (props) => {
   //     cardData[itemId][selectedWeight] = 1;
   //   }
   //   setCartItems(cardData);
-    
+
   // };
 
   useEffect(() => {
     console.log(cartItems);
-    
-  },[cartItems]);
+  }, [cartItems]);
 
   const getCartCount = () => {
     let totalCount = 0;
 
-    for(const items in cartItems){
-      for(const item in cartItems[items]){
+    for (const items in cartItems) {
+      for (const item in cartItems[items]) {
         try {
-          if(cartItems[items][item] > 0){
+          if (cartItems[items][item] > 0) {
             totalCount += cartItems[items][item];
           }
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
     }
     return totalCount;
-  }
+  };
+  // Price formatter
+  const formatPrice = (price) => `${currency}${Number(price || 0).toFixed(2)}`;
+
+  // Convert cart object into an array
+  const cart = useMemo(() => {
+    return Object.entries(cartItems || {}).flatMap(([productId, weights]) =>
+      Object.entries(weights || {})
+        .map(([weight, quantity]) => {
+          const product = allProducts.find(
+            (item) => String(item.id) === String(productId),
+          );
+
+          if (!product || quantity <= 0) return null;
+
+          return {
+            ...product,
+            cartId: `${productId}-${weight}`,
+            weight,
+            quantity,
+          };
+        })
+        .filter(Boolean),
+    );
+  }, [cartItems, allProducts]);
+
+  // cart Total
+  const subtotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
 
   const updateCartQuantity = (itemId, size, quantity) => {
     setCartItems((prevCart) => {
@@ -110,6 +149,19 @@ const ShopContextProvider = (props) => {
     });
   };
 
+  // Recommended products
+  const recommendedProducts = useMemo(() => {
+    const cartProductIds = Object.keys(cartItems || {});
+
+    return allProducts
+      .filter((product) => !cartProductIds.includes(String(product.id)))
+      .slice(0, 4);
+  }, [allProducts, cartItems]);
+
+  // Add recommended product
+  const handleAddToCart = (product) => {
+    addToCart(product.id, product.unit || "1 unit", 1);
+  };
 
   const value = {
     freshFruits,
@@ -122,7 +174,13 @@ const ShopContextProvider = (props) => {
     allProducts,
 
     navigate,
+    formatPrice,
 
+    recommendedProducts,
+    handleAddToCart,
+
+    cart,
+    subtotal,
     currency,
     delivery_fee,
     search,
@@ -138,6 +196,6 @@ const ShopContextProvider = (props) => {
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
   );
-};
+};;
 
 export default ShopContextProvider;

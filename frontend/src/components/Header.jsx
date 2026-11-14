@@ -1,13 +1,17 @@
-import { User, Heart, ShoppingBag, Menu, ChevronDown, Truck } from "lucide-react";
+import { User, Heart, ShoppingBag } from "lucide-react";
+
 import SearchBar from "./SearchBar";
 import logo from "../assets/logo.png";
 import Navbar from "./NavBar";
+
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 
 const Header = () => {
-  const cartTotal = "19.46";
-  const { currency, getCartCount, navigate } = useContext(ShopContext);
+  const { getCartCount, navigate, subtotal, formatPrice } =
+    useContext(ShopContext);
+
+  const cartCount = getCartCount();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
@@ -26,7 +30,7 @@ const Header = () => {
           <SearchBar />
         </div>
 
-        {/* Actions */}
+        {/* Header Actions */}
         <div className="flex shrink-0 items-center gap-4 sm:gap-6">
           {/* Account */}
           <button
@@ -48,32 +52,40 @@ const Header = () => {
 
           {/* Shopping Cart */}
           <button
-            onClick={() => navigate('/cart')}
+            onClick={() => navigate("/cart")}
             type="button"
-            aria-label="Shopping cart"
+            aria-label={`Shopping cart with ${cartCount} items`}
             className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-green-50"
           >
+            {/* Cart Icon & Quantity Badge */}
             <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-green-100 text-green-700">
               <ShoppingBag size={22} strokeWidth={1.8} />
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-xs font-semibold text-white">
-                {getCartCount()}
-              </span>
+
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-green-600 px-1 text-xs font-semibold text-white">
+                  {cartCount}
+                </span>
+              )}
             </div>
 
+            {/* Cart Information */}
             <div className="hidden text-left sm:block">
-              <p className="text-xs text-gray-500">Shopping cart</p>
+              <p className="text-xs text-gray-500">
+                Shopping cart ({cartCount})
+              </p>
+
               <p className="text-sm font-bold text-gray-900">
-                {currency}
-                {cartTotal}
+                {formatPrice(subtotal)}
               </p>
             </div>
           </button>
         </div>
       </div>
+
+      {/* Navigation */}
       <Navbar />
     </header>
   );
 };
 
 export default Header;
-

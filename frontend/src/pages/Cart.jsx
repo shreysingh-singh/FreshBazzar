@@ -19,62 +19,42 @@ import {
 } from "lucide-react";
 
 import { ShopContext } from "../context/ShopContext";
+import StoreBenefits from "@/components/StoreBenefits";
+import Title from "@/components/Title";
 
 const FREE_DELIVERY_THRESHOLD = 499;
 
 const Cart = () => {
   const {
+    cart,
     cartItems,
     allProducts,
+    recommendedProducts,
     updateCartQuantity,
+    handleAddToCart,
     addToCart,
-    currency,
+    formatPrice,
     delivery_fee,
   } = useContext(ShopContext);
 
   const [promoCode, setPromoCode] = useState("");
 
-  // Convert cart object into an array
-  const cart = useMemo(() => {
-    return Object.entries(cartItems || {}).flatMap(([productId, weights]) =>
-      Object.entries(weights || {})
-        .map(([weight, quantity]) => {
-          const product = allProducts.find(
-            (item) => String(item.id) === String(productId),
-          );
+  
 
-          if (!product || quantity <= 0) return null;
 
-          return {
-            ...product,
-            cartId: `${productId}-${weight}`,
-            weight,
-            quantity,
-          };
-        })
-        .filter(Boolean),
-    );
-  }, [cartItems, allProducts]);
 
-  // Recommended products
-  const recommendedProducts = useMemo(() => {
-    const cartProductIds = Object.keys(cartItems || {});
+  
 
-    return allProducts
-      .filter((product) => !cartProductIds.includes(String(product.id)))
-      .slice(0, 4);
-  }, [allProducts, cartItems]);
-
-  // Price formatter
-  const formatPrice = (price) => `${currency}${Number(price || 0).toFixed(2)}`;
 
   // Cart calculations
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  
 
   const subtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
+  
 
   const amountAway = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
 
@@ -101,10 +81,6 @@ const Cart = () => {
     updateCartQuantity(item.id, item.weight, 0);
   };
 
-  // Add recommended product
-  const handleAddToCart = (product) => {
-    addToCart(product.id, product.unit || "1 unit", 1);
-  };
 
   return (
     <main className="min-h-screen bg-white text-[#292d27]">
@@ -418,7 +394,7 @@ const Cart = () => {
                   type="button"
                   disabled={cart.length === 0}
                   onClick={() => {
-                    window.location.href = "/checkout";
+                    window.location.href = "/place-order";
                   }}
                   className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#48b52c] py-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#359c20] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
                 >
@@ -452,16 +428,10 @@ const Cart = () => {
         {recommendedProducts.length > 0 && (
           <section className="mt-16">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  Make your basket a little fresher
-                </h2>
-
-                <p className="mt-2 text-xs text-[#858b80]">
-                  A few favourites you might have missed.
-                </p>
-              </div>
-
+              <Title
+                text1={"Make your basket a little fresher"}
+                text2={"A few favourites you might have missed."}
+              />
               <Link
                 to="/collection"
                 className="flex items-center gap-1 text-xs font-medium text-[#299b20] transition hover:gap-2"
@@ -471,7 +441,7 @@ const Cart = () => {
               </Link>
             </div>
 
-            {/* Product Grid */}
+            {/* Related Product Grid */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
               {recommendedProducts.map((product) => (
                 <div
@@ -513,7 +483,7 @@ const Cart = () => {
                     </button>
                   </div>
 
-                  {/* Product Details */}
+                  {/*  Product Details */}
                   <div className="p-3 sm:p-4">
                     <p className="mb-1 text-[9px] text-[#858b80]">
                       {product.category}
@@ -558,67 +528,8 @@ const Cart = () => {
           </section>
         )}
       </div>
-
       {/* Bottom Benefits Strip */}
-      <section className="border-t border-[#e8ece4] bg-white">
-        <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-7 px-4 py-8 sm:px-7 lg:grid-cols-4 lg:px-12 xl:px-14">
-          <div className="flex items-center gap-3">
-            <Truck
-              size={21}
-              strokeWidth={1.3}
-              className="shrink-0 text-[#49b52d]"
-            />
-            <div>
-              <h4 className="text-xs font-semibold">Delivered fresh</h4>
-              <p className="mt-1 text-[10px] text-[#858b80]">
-                Convenient daily delivery
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Sprout
-              size={21}
-              strokeWidth={1.3}
-              className="shrink-0 text-[#49b52d]"
-            />
-            <div>
-              <h4 className="text-xs font-semibold">Farm-picked quality</h4>
-              <p className="mt-1 text-[10px] text-[#858b80]">
-                Good food, nothing extra
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <ShieldCheck
-              size={21}
-              strokeWidth={1.3}
-              className="shrink-0 text-[#49b52d]"
-            />
-            <div>
-              <h4 className="text-xs font-semibold">Freshness guaranteed</h4>
-              <p className="mt-1 text-[10px] text-[#858b80]">
-                Love it or we make it right
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Headphones
-              size={21}
-              strokeWidth={1.3}
-              className="shrink-0 text-[#49b52d]"
-            />
-            <div>
-              <h4 className="text-xs font-semibold">Here to help</h4>
-              <p className="mt-1 text-[10px] text-[#858b80]">
-                Friendly support, 7 days a week
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <StoreBenefits />
     </main>
   );
 };

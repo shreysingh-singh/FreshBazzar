@@ -21,9 +21,26 @@ function Product() {
     useContext(ShopContext);
 
   const productData = allProducts.find((item) => String(item.id) === productId);
-  const [thumbnail, setThumbnail] = useState(productData?.image || "");
+
+   if (!productData) {
+     return <p className="p-10">Product not found.</p>;
+   }
+
+  const [thumbnail, setThumbnail] = useState('');
   const [selectedWeight, setSelectedWeight] = useState("500 g");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (productData) {
+      const productImage = Array.isArray(productData.image)
+        ? productData.image[0]
+        : productData.image;
+
+      setThumbnail(productImage || "");
+      setSelectedWeight("500 g");
+      setQuantity(1);
+    }
+  }, [productId, productData]);
 
   return (
     <div className="w-full overflow-hidden">
@@ -278,7 +295,7 @@ function Product() {
       </div>
 
       {/* Related Products */}
-      <RelatedProducts
+       <RelatedProducts
         category={productData.category}
         productId={productData.id}
       />
